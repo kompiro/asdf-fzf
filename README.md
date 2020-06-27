@@ -1,8 +1,10 @@
 # asdf-fzf
 
-[![Build Status](https://travis-ci.org/kompiro/asdf-fzf.svg?branch=master)](https://travis-ci.org/kompiro/asdf-fzf)
+![Status](https://github.com/kompiro/asdf-fzf/workflows/plugin%20test/badge.svg)
 
 [fzf](https://github.com/junegunn/fzf) plugin for the [asdf](https://github.com/asdf-vm/asdf) version manager.
+
+fzf is a general-purpose command-line fuzzy finder.
 
 ## Install
 
