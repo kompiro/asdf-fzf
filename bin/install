@@ -27,9 +27,11 @@ install_fzf() {
     tar xf "$source_path" -C "$install_path" --strip-components=1 >/dev/null || fail "Could not uncompress"
     rm "$source_path"
     ${install_path}/install --bin
+    echo ""
     echo "The installation was successful!"
+    echo ""
     echo "If you'd like to generate configuration files, "
-    echo "Launch ${install_path}/install ."
+    echo "Launch '${install_path}/install' ."
   ) || (
     rm -rf "$install_path"
     fail "An error occurred"
