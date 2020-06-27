@@ -8,5 +8,5 @@ script:
   - asdf plugin-test fzf ./ 'fzf --version'
 os:
   - osx
-  - bionic
+  - linux
   - windows
