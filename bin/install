@@ -26,8 +26,10 @@ install_fzf() {
     curl --silent --location --create-dirs --output "$source_path" "$download_url" || fail "Could not download"
     tar xf "$source_path" -C "$install_path" --strip-components=1 >/dev/null || fail "Could not uncompress"
     rm "$source_path"
-    ${install_path}/install
+    ${install_path}/install --bin
     echo "The installation was successful!"
+    echo "If you'd like to generate configuration files, "
+    echo "Launch ${install_path}/install ."
   ) || (
     rm -rf "$install_path"
     fail "An error occurred"
