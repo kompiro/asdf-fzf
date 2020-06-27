@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+fail() {
+  echo -e "\e[31mFail:\e[m $*"
+  exit 1
+}
+
+install_fzf() {
+  local install_type=$1
+  local version=$2
+  local install_path=$3
+
+  if [ "$install_type" != "version" ]; then
+    fail "asdf-fzf supports release installs only"
+  fi
+
+  local download_url
+  download_url="https://github.com/junegunn/fzf/archive/${version}.tar.gz"
+  local source_path="${install_path}/${version}.tar.gz"
+
+  (
+    echo "∗ Downloading and installing fzf..."
+    curl --silent --location --create-dirs --output "$source_path" "$download_url" || fail "Could not download"
+    tar xf "$source_path" -C "$install_path" --strip-components=1 >/dev/null || fail "Could not uncompress"
+    rm "$source_path"
+    ${install_path}/install
+    echo "The installation was successful!"
+  ) || (
+    rm -rf "$install_path"
+    fail "An error occurred"
+  )}
+
+install_fzf "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
