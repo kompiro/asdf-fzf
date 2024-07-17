@@ -8,6 +8,27 @@ fail() {
   exit 1
 }
 
+# Function to compare versions
+vercomp() {
+  local version="$1"
+  local target="0.54.0"
+
+  # Convert version strings to arrays
+  IFS='.' read -r -a version_parts <<< "$version"
+  IFS='.' read -r -a target_parts <<< "$target"
+
+  # Compare each part of the version
+  for ((i = 0; i < 3; i++)); do
+    if (( version_parts[i] > target_parts[i] )); then
+      return 0
+    elif (( version_parts[i] < target_parts[i] )); then
+      return 1
+    fi
+  done
+
+  return 0
+}
+
 install_fzf() {
   local install_type=$1
   local version=$2
@@ -17,9 +38,13 @@ install_fzf() {
     fail "asdf-fzf supports release installs only"
   fi
 
-  local download_url
-  download_url="https://github.com/junegunn/fzf/archive/${version}.tar.gz"
-  local source_path="${install_path}/${version}.tar.gz"
+  if vercomp "$version"; then
+    local download_url="https://github.com/junegunn/fzf/archive/v${version}.tar.gz"
+    local source_path="${install_path}/v${version}.tar.gz"
+  else
+    local download_url="https://github.com/junegunn/fzf/archive/${version}.tar.gz"
+    local source_path="${install_path}/${version}.tar.gz"
+  fi
 
   (
     echo "∗ Downloading and installing fzf..."
