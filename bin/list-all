@@ -18,7 +18,7 @@ function fetch_versions() {
 
   cmd="$cmd $releases_path"
 
-  echo $(eval "$cmd" | grep -oE "tag_name\": \".{1,15}\"," | sed 's/tag_name\": \"//;s/\",//' | sort_versions)
+  echo $(eval "$cmd" | grep -oE "tag_name\": \".{1,15}\"," | sed 's/tag_name\": \"//;s/\",//;s/^v//' | sort_versions)
 }
 
 # We're purposefully sorting each list individually instead of the global list because one of the version 
